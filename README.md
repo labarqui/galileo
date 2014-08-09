@@ -9,6 +9,7 @@ Resources for working with the Intel Galileo Board
 - Wikipedia: http://en.wikipedia.org/wiki/Intel\_Galileo
 - Intel Quark SoC X1000: http://ark.intel.com/products/79084
 - Yocto Project (Galileo's Linux flavour): https://www.yoctoproject.org
+- Meshcentral, Galileo boards cluster: https://software.intel.com/en-us/blogs/2014/01/20/meshcentralcom-intelr-galileo-tower
 
 
 ## Examples
