@@ -43,7 +43,7 @@ gpio = 3
 f = open_gpio(gpio)
 
 # Iterate
-for i in range(1):
+while(1):
     write_gpio(f, 1)
     time.sleep(1)
     write_gpio(f, 0)
