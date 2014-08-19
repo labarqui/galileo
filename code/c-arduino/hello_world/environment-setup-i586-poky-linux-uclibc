@@ -1,0 +1,31 @@
+export PATH=/opt/clanton-tiny/1.4.2/sysroots/i386-pokysdk-darwin/usr/bin:/opt/clanton-tiny/1.4.2/sysroots/i386-pokysdk-darwin/usr/bin/i586-poky-linux-uclibc:$PATH
+export PKG_CONFIG_SYSROOT_DIR=/opt/clanton-tiny/1.4.2/sysroots/i586-poky-linux-uclibc
+export PKG_CONFIG_PATH=/opt/clanton-tiny/1.4.2/sysroots/i586-poky-linux-uclibc/usr/lib/pkgconfig
+export CONFIG_SITE=/opt/clanton-tiny/1.4.2/site-config-i586-poky-linux-uclibc
+export TARGET_ARCH="-m32 -march=i586 --sysroot=/opt/clanton-tiny/1.4.2/sysroots/i586-poky-linux-uclibc"
+export CC="i586-poky-linux-uclibc-gcc  $TARGET_ARCH"
+export CXX="i586-poky-linux-uclibc-g++  $TARGET_ARCH"
+export CPP="i586-poky-linux-uclibc-gcc -E  $TARGET_ARCH"
+export AS="i586-poky-linux-uclibc-as  "
+export LD="i586-poky-linux-uclibc-ld   --sysroot=/opt/clanton-tiny/1.4.2/sysroots/i586-poky-linux-uclibc"
+export GDB=i586-poky-linux-uclibc-gdb
+export STRIP=i586-poky-linux-uclibc-strip
+export RANLIB=i586-poky-linux-uclibc-ranlib
+export OBJCOPY=i586-poky-linux-uclibc-objcopy
+export OBJDUMP=i586-poky-linux-uclibc-objdump
+export AR=i586-poky-linux-uclibc-ar
+export NM=i586-poky-linux-uclibc-nm
+export M4=m4
+export TARGET_PREFIX=i586-poky-linux-uclibc-
+export CONFIGURE_FLAGS="--target=i586-poky-linux-uclibc --host=i586-poky-linux-uclibc --build=i386-linux --with-libtool-sysroot=/opt/clanton-tiny/1.4.2/sysroots/i586-poky-linux-uclibc"
+export CFLAGS=" -O2 -pipe -g -feliminate-unused-debug-types"
+export CXXFLAGS=" -O2 -pipe -g -feliminate-unused-debug-types -fpermissive"
+export LDFLAGS="-Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed"
+export CPPFLAGS=""
+export OECORE_NATIVE_SYSROOT="/opt/clanton-tiny/1.4.2/sysroots/i386-pokysdk-darwin"
+export OECORE_TARGET_SYSROOT="/opt/clanton-tiny/1.4.2/sysroots/i586-poky-linux-uclibc"
+export OECORE_ACLOCAL_OPTS="-I /opt/clanton-tiny/1.4.2/sysroots/i386-pokysdk-darwin/usr/share/aclocal"
+export OECORE_DISTRO_VERSION="1.4.2"
+export OECORE_SDK_VERSION="1.4.2"
+export PYTHONHOME=/opt/clanton-tiny/1.4.2/sysroots/i386-pokysdk-darwin/usr
+export ARCH=x86
