@@ -8,13 +8,13 @@
 BINARY = hello
 MAIN = $(BINARY).c
 ARDUINO_VER = 153
-PORT = /dev/ttyACM0
+PORT = /dev/ttyUSB0
 
 # Paths
 
-ABS_PATH = /home/jlh/arduino-1.5.3
-REL_PATH=/hardware/tools/sysroots
-BIN_PATH = $(ABS_PATH)$(REL_PATH)/x86_64-pokysdk-linux/usr/bin/i586-poky-linux-uclibc
+ABS_PATH = /Applications/Galileo.app/Contents/Resources/Java
+REL_PATH=/hardware/tools/x86
+BIN_PATH = $(ABS_PATH)$(REL_PATH)/i386-pokysdk-darwin/usr/bin/i586-poky-linux-uclibc
 SYS_ROOT = $(ABS_PATH)$(REL_PATH)/i586-poky-linux-uclibc
 ARDUINO_PATH = $(ABS_PATH)/hardware/arduino/x86/cores/arduino
 VARIANT = $(ABS_PATH)/hardware/arduino/x86/variants/galileo_fab_d
