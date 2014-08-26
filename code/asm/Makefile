@@ -8,7 +8,8 @@
 BINARY = hello_world
 MAIN = $(BINARY).asm
 ARDUINO_VER = 153
-PORT = /dev/tty.usbmodem2411
+PORT = /dev/cu.usbmodem2411
+PLATFORM = osx
 
 # Paths
 
@@ -96,4 +97,4 @@ clean:
 # sudo make flash
 flash: $(BINARY).elf
 	@echo "flash"
-	bash $(ARDUINO_PATH)/../../tools/izmir/clupload_linux.sh $(ABS_PATH)/hardware/tools $(BINARY).elf $(PORT)
+	bash $(ARDUINO_PATH)/../../tools/izmir/clupload_$(PLATFORM).sh $(ABS_PATH)$(REL_PATH)/bin $(BINARY).elf $(PORT)
