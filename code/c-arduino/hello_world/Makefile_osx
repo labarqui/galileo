@@ -95,13 +95,6 @@ clean:
 	rm -f *.elf
 	rm -f *.hex
 
-# changes in clupload_linux.sh
-# replace
-# path_to_exe=$1
-# fixed_path=${path_to_exe//\\/\/}
-# with
-# fixed_path=$1
-
 # on GNU/Linux
 # sudo make flash
 flash: $(BINARY).elf
