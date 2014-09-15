@@ -15,3 +15,17 @@ Resources for working with the Intel Galileo Board
 ## Examples
 
 See the `code` folder for examples.
+
+## Upgrading `opkg`
+
+1. Copy the pkg sources config to the board:
+
+  `scp base-feeds.conf root@ipaddress:/etc/opkg/base-feeds.conf`
+
+2. Update the repo sources: `opkg update`
+3. Upgrade the packages: `opkg upgrade`
+4. Install basic packages:
+
+  `opkg install vim git make gcc-dev`
+
+Based on [this](http://alextgalileo.altervista.org/package-repo-configuration-instructions.html)
