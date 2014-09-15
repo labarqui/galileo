@@ -22,9 +22,18 @@ See the `code` folder for examples.
 
   `scp base-feeds.conf root@ipaddress:/etc/opkg/base-feeds.conf`
 
-2. Update the repo sources: `opkg update`
-3. Upgrade the packages: `opkg upgrade`
-4. Install basic packages:
+2. Update the uClibc library: 
+  
+  `opkg install --force-overwrite uclibc`
+3. Update the repo sources: 
+
+  `opkg update`
+
+4. Upgrade the packages: 
+
+  `opkg upgrade`
+
+5. Install basic packages:
 
   `opkg install vim git make gcc-dev`
 
