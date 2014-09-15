@@ -2,3 +2,4 @@
 *.elf
 *.sw*
 .DS_S*
+.DS_Store
