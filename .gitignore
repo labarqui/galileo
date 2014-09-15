@@ -3,3 +3,4 @@
 *.sw*
 .DS_S*
 .DS_Store
+*.d
