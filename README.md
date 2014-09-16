@@ -35,6 +35,6 @@ See the `code` folder for examples.
 
 5. Install basic packages:
 
-  `opkg install vim git make gcc-dev gcc-symlinks cpp g++ g++-symlinks uclibc-dev uclibc-utils binutils-dev binutils-symlinks python-dev coreutils-dev`
+  `opkg install vim git make gcc-dev gcc-symlinks cpp cpp-symlinks g++ g++-symlinks uclibc-dev uclibc-utils binutils-dev binutils-symlinks python-dev coreutils-dev`
 
 Based on [this](http://alextgalileo.altervista.org/package-repo-configuration-instructions.html)
