@@ -12,7 +12,7 @@ PORT = /dev/ttyACM0
 
 # Paths
 
-ABS_PATH = /home/jlh/arduino-1.5.3
+ABS_PATH = $(HOME)/arduino-1.5.3
 LIB_PATH = $(ABS_PATH)/libraries
 REL_PATH=/hardware/tools/sysroots
 BIN_PATH = $(ABS_PATH)$(REL_PATH)/x86_64-pokysdk-linux/usr/bin/i586-poky-linux-uclibc
