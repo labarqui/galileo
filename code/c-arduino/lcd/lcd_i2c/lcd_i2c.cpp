@@ -18,6 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
  */
 // Arduino hooks
+#define PLATFORM_NAME "Galileo"
+#include "variant.h"
 #include <Arduino.h>
 #include <trace.h>
 #include <interrupt.h>

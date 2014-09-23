@@ -43,9 +43,9 @@ LDFLAGS = -m32 -march=i586 --sysroot=$(SYS_ROOT) -Os -Wl,--gc-sections
 # modules
 # does not have all the files change as per project
 C_MODULES = $(ARDUINO_PATH)/wiring_analog.c
-C_MODULES += $(ARDUINO_PATH)/fast_gpio_common.c  
+# C_MODULES += $(ARDUINO_PATH)/fast_gpio_common.c  
 C_MODULES += $(ARDUINO_PATH)/fast_gpio_sc.c  
-C_MODULES += $(ARDUINO_PATH)/fast_gpio_nc.c  
+# C_MODULES += $(ARDUINO_PATH)/fast_gpio_nc.c  
 C_MODULES += $(ARDUINO_PATH)/wiring_digital.c
 C_MODULES += $(ARDUINO_PATH)/interrupt.c  
 C_MODULES += $(ARDUINO_PATH)/sysfs.c  
