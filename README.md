@@ -12,6 +12,13 @@ Resources for working with the Intel Galileo Board
 - Meshcentral, Galileo boards cluster: https://software.intel.com/en-us/blogs/2014/01/20/meshcentralcom-intelr-galileo-tower
 - GPIO docs: http://www.malinov.com/Home/sergey-s-blog/intelgalileo-programminggpiofromlinux
 
+## Connecting to the serial console:
+
+On Linux launch minicom:
+```
+sudo apt-get install minicom
+sudo minicom -b 115200 -D /dev/ttyACM0
+```
 
 ## Examples
 
