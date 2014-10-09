@@ -66,8 +66,8 @@ CXX_MODULES += $(wildcard $(LIB_PATH)/LiquidCrystalI2C/*.cpp)
 CXX_MODULES += $(wildcard $(ARDUINO_LIB_PATH)/Wire/*.cpp)
 
 
-INCS  = -I$(ARDUINO_PATH)
-INCS +=	-I$(ABS_PATH)/hardware/arduino/x86/variants/galileo_fab_d 
+INCS =	-I$(ABS_PATH)/hardware/arduino/x86/variants/galileo_fab_d 
+INCS += -I$(ARDUINO_PATH)
 INCS +=	-I$(LIB_PATH)/LiquidCrystal/src/
 INCS +=	-I$(LIB_PATH)/LiquidCrystalI2C/
 INCS +=	-I$(ARDUINO_LIB_PATH)/Wire/
