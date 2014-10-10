@@ -90,6 +90,7 @@ static const u8 cy8c9540a_port_offs[] = {
 #define GPIO_BASE_ID			16
 #define GPIO_IRQBASE			64
 #define PWM_BASE_ID			0
+// TODO: Support dynamic PWM values
 #define PWM_CLK				0x00	/* see resulting PWM_TCLK_NS */
 #define PWM_TCLK_NS			31250	/* 32kHz */
 #define SOC_GPIO_INT_PIN		13
@@ -508,13 +509,15 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
 	if (pwm->pwm > NPWM) {
 		return -EINVAL;
 	}
- 
+	// TODO: Support dynamic PWM values, set registers
+	// accordingly
 	period = period_ns / PWM_TCLK_NS;
 	duty = duty_ns / PWM_TCLK_NS;
  
 	/*
 	 * Check period's upper bound.  Note the duty cycle is already sanity
 	 * checked by the PWM framework.
+	 * TODO: Support dynamic PWM values
 	 */
 	if (period > PWM_MAX_PERIOD) {
 		dev_err(&client->dev, "period must be within [0-%d]ns\n",
