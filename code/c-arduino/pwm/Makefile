@@ -5,7 +5,7 @@
 # Aug-2014
 #
 
-BINARY = lcd_i2c
+BINARY = pwm
 MAIN = $(BINARY).cpp
 ARDUINO_VER = 153
 PORT = /dev/ttyACM0
@@ -61,16 +61,10 @@ CXX_MODULES += $(ARDUINO_PATH)/Print.cpp
 CXX_MODULES += $(ARDUINO_PATH)/Stream.cpp   
 CXX_MODULES += $(ARDUINO_PATH)/WString.cpp
 CXX_MODULES += $(ARDUINO_PATH)/WMath.cpp
-CXX_MODULES += $(LIB_PATH)/LiquidCrystal/src/LiquidCrystal.cpp
-CXX_MODULES += $(wildcard $(LIB_PATH)/LiquidCrystalI2C/*.cpp)
-CXX_MODULES += $(wildcard $(ARDUINO_LIB_PATH)/Wire/*.cpp)
 
 
 INCS =	-I$(ABS_PATH)/hardware/arduino/x86/variants/galileo_fab_d 
 INCS += -I$(ARDUINO_PATH)
-INCS +=	-I$(LIB_PATH)/LiquidCrystal/src/
-INCS +=	-I$(LIB_PATH)/LiquidCrystalI2C/
-INCS +=	-I$(ARDUINO_LIB_PATH)/Wire/
 
 COBJS = $(C_MODULES:.c=.o)
 CXXOBJS = $(CXX_MODULES:.cpp=.o)
