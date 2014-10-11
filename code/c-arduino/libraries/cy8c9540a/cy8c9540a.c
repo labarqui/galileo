@@ -94,7 +94,26 @@ static const u8 cy8c9540a_port_offs[] = {
 #define PWM_CLK				0x00	/* see resulting PWM_TCLK_NS */
 #define PWM_TCLK_NS			31250	/* 32kHz */
 #define SOC_GPIO_INT_PIN		13
+
+#define PWM_CLK_32K			0x00
+#define PWM_TCLK_NS_32K		31250
+#define PWM_CLK_24M			0x01
+#define PWM_TCLK_NS_24M		41
+#define PWM_CLK_1_5M		0x02
+#define PWM_TCLK_NS_1_5M	666
+#define PWM_CLK_93_75K		0x03
+#define PWM_TCLK_NS_93_75K	10666
+#define PWM_CLK_367_6K		0x04
+#define PWM_TCLK_NS_367_6	2720348
  
+static const u8 clock_select[][] = {
+	{PWM_CLK_32K, PWM_TCLK_NS_32K},
+	{PWM_CLK_24M, PWM_TCLK_NS_24M},
+	{PWM_CLK_1_5M, PWM_TCLK_NS_1_5M},
+	{PWM_CLK_93_75K, PWM_TCLK_NS_93_75K},
+	{PWM_CLK_367_6, PWM_TCLK_NS_367_6}
+}
+
 /* PWM-to-GPIO mapping (0 == first Cypress GPIO).  */
 #define PWM_UNUSED			-1
 static const int pwm2gpio_mapping[] = {
