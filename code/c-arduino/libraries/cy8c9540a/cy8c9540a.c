@@ -522,6 +522,10 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
 {
 	int ret = 0;
 	int period = 0, duty = 0;
+	int i;
+	int pwm_tclk_ns;
+	int selected_clock = -1;
+
 	struct cy8c9540a *dev =
 	    container_of(chip, struct cy8c9540a, pwm_chip);
 	struct i2c_client *client = dev->client;
@@ -535,10 +539,6 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
 	 * to find a suitable source clock and divider
 	 * combination
      */
-	int i;
-	int pwm_tclk_ns;
-	int selected_clock = -1;
-
 	for (i = 0; i < NCLOCKS; i++) {
 		/*
          * Select a clock candidate
