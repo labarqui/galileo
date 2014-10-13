@@ -107,7 +107,7 @@ static const u8 cy8c9540a_port_offs[] = {
 #define PWM_TCLK_NS_367_6	2720348
  
 #define NCLOCKS 5
-static const unsigned int clock_select[][] = {
+static const unsigned int clock_select[][2] = {
 	{PWM_CLK_32K, PWM_TCLK_NS_32K},
 	{PWM_CLK_24M, PWM_TCLK_NS_24M},
 	{PWM_CLK_1_5M, PWM_TCLK_NS_1_5M},
@@ -529,28 +529,36 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
 	if (pwm->pwm > NPWM) {
 		return -EINVAL;
 	}
-	// TODO: Support dynamic PWM values, set registers
-	// accordingly
+
+	/*
+	 * We need to iterate over the available clocks
+	 * to find a suitable source clock and divider
+	 * combination
+     */
 	int i;
 	int pwm_tclk_ns;
 	int selected_clock = -1;
+
 	for (i = 0; i < NCLOCKS; i++) {
+		/*
+         * Select a clock candidate
+		 */
 		pwm_tclk_ns = clock_select[i][1];
 		period = period_ns / pwm_tclk_ns;
+
+		/*
+		 * Check if the period can be achieved
+		 * by this clock.
+		 * checked by the PWM framework.
+		 */
 		if (period <= PWM_MAX_PERIOD && period > 0) {
 			selected_clock = i;
 			break;
 		}
 	}
  
-	/*
-	 * Check period's upper bound.  Note the duty cycle is already sanity
-	 * checked by the PWM framework.
-	 * TODO: Support dynamic PWM values
-	 */
 	if (selected_clock < 0) {
-		dev_err(&client->dev, "period must be within [0-%d]ns\n",
-			PWM_MAX_PERIOD * PWM_TCLK_NS);
+		dev_err(&client->dev, "invalid period\n");
 		return -EINVAL;
 	} else {
 		period = period_ns / pwm_tclk_ns;
