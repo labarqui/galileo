@@ -103,17 +103,17 @@ static const u8 cy8c9540a_port_offs[] = {
 #define PWM_TCLK_NS_1_5M	666
 #define PWM_CLK_93_75K		0x03
 #define PWM_TCLK_NS_93_75K	10666
-#define PWM_CLK_367_6K		0x04
+#define PWM_CLK_367_6		0x04
 #define PWM_TCLK_NS_367_6	2720348
  
 #define NCLOCKS 5
-static const u8 clock_select[][] = {
+static const unsigned int clock_select[][] = {
 	{PWM_CLK_32K, PWM_TCLK_NS_32K},
 	{PWM_CLK_24M, PWM_TCLK_NS_24M},
 	{PWM_CLK_1_5M, PWM_TCLK_NS_1_5M},
 	{PWM_CLK_93_75K, PWM_TCLK_NS_93_75K},
 	{PWM_CLK_367_6, PWM_TCLK_NS_367_6}
-}
+};
 
 /* PWM-to-GPIO mapping (0 == first Cypress GPIO).  */
 #define PWM_UNUSED			-1
