@@ -532,11 +532,11 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
 	// TODO: Support dynamic PWM values, set registers
 	// accordingly
 	int i;
-	int pwm_clk_ns;
+	int pwm_tclk_ns;
 	int selected_clock = -1;
 	for (i = 0; i < NCLOCKS; i++) {
-		pwm_clk_ns = clock_select[i][1];
-		period = period_ns / pwm_clk_ns;
+		pwm_tclk_ns = clock_select[i][1];
+		period = period_ns / pwm_tclk_ns;
 		if (period <= PWM_MAX_PERIOD && period > 0) {
 			selected_clock = i;
 			break;
@@ -553,8 +553,8 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
 			PWM_MAX_PERIOD * PWM_TCLK_NS);
 		return -EINVAL;
 	} else {
-		period = period_ns / PWM_TCLK_NS;
-		duty = duty_ns / PWM_TCLK_NS;
+		period = period_ns / pwm_tclk_ns;
+		duty = duty_ns / pwm_tclk_ns;
 	}
  
 	mutex_lock(&dev->lock);
