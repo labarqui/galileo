@@ -106,6 +106,7 @@ static const u8 cy8c9540a_port_offs[] = {
 #define PWM_CLK_367_6K		0x04
 #define PWM_TCLK_NS_367_6	2720348
  
+#define NCLOCKS 5
 static const u8 clock_select[][] = {
 	{PWM_CLK_32K, PWM_TCLK_NS_32K},
 	{PWM_CLK_24M, PWM_TCLK_NS_24M},
@@ -530,28 +531,45 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
 	}
 	// TODO: Support dynamic PWM values, set registers
 	// accordingly
-	period = period_ns / PWM_TCLK_NS;
-	duty = duty_ns / PWM_TCLK_NS;
+	int i;
+	int pwm_clk_ns;
+	int selected_clock = -1;
+	for (i = 0; i < NCLOCKS; i++) {
+		pwm_clk_ns = clock_select[i][1];
+		period = period_ns / pwm_clk_ns;
+		if (period <= PWM_MAX_PERIOD && period > 0) {
+			selected_clock = i;
+			break;
+		}
+	}
  
 	/*
 	 * Check period's upper bound.  Note the duty cycle is already sanity
 	 * checked by the PWM framework.
 	 * TODO: Support dynamic PWM values
 	 */
-	if (period > PWM_MAX_PERIOD) {
+	if (selected_clock < 0) {
 		dev_err(&client->dev, "period must be within [0-%d]ns\n",
 			PWM_MAX_PERIOD * PWM_TCLK_NS);
 		return -EINVAL;
+	} else {
+		period = period_ns / PWM_TCLK_NS;
+		duty = duty_ns / PWM_TCLK_NS;
 	}
  
 	mutex_lock(&dev->lock);
- 
 	ret = i2c_smbus_write_byte_data(client, REG_PWM_SELECT, (u8)pwm->pwm);
 	if (ret < 0) {
 		dev_err(&client->dev, "can't write to REG_PWM_SELECT\n");
 		goto end;
 	}
  
+	ret = i2c_smbus_write_byte_data(client, REG_PWM_CLK, (u8)clock_select[selected_clock][0]);
+	if (ret < 0) {
+		dev_err(&client->dev, "can't write to REG_PWM_CLK\n");
+		goto end;
+	}
+
 	ret = i2c_smbus_write_byte_data(client, REG_PWM_PERIOD, (u8)period);
 	if (ret < 0) {
 		dev_err(&client->dev, "can't write to REG_PWM_PERIOD\n");
