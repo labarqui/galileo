@@ -1,0 +1,116 @@
+From xxxx Mon Sep 17 00:00:00 2001
+From: Jose Honorato <jlhonora@ing.puc.cl>
+Date: Tue, 14 Oct 2014 09:00:01 -0300
+Subject: [PATCH] Cypress I/O expander with extended PWM
+
+Added dynamic clock source selection for PWM depending 
+on the input period.
+
+---
+ drivers/mfd/cy8c9540a.c | 69 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-----------
+
+diff --git a/drivers/mfd/cy8c9540a.c b/drivers/mfd/cy8c9540a.c
+index 46359c6..af50dd1 100644
+--- a/drivers/mfd/cy8c9540a.c
++++ a/drivers/mfd/cy8c9540a.c
+@@ -90,10 +90,29 @@ static const u8 cy8c9540a_port_offs[] = {
+ #define GPIO_BASE_ID			16
+ #define GPIO_IRQBASE			64
+ #define PWM_BASE_ID			0
+-#define PWM_CLK				0x00	/* see resulting PWM_TCLK_NS */
+-#define PWM_TCLK_NS			31250	/* 32kHz */
+ #define SOC_GPIO_INT_PIN		13
+  
++/* PWM clock definition */
++#define PWM_CLK_32K			0x00
++#define PWM_TCLK_NS_32K		31250
++#define PWM_CLK_24M			0x01
++#define PWM_TCLK_NS_24M		41
++#define PWM_CLK_1_5M		0x02
++#define PWM_TCLK_NS_1_5M	666
++#define PWM_CLK_93_75K		0x03
++#define PWM_TCLK_NS_93_75K	10666
++#define PWM_CLK_367_6		0x04
++#define PWM_TCLK_NS_367_6	2720348
++ 
++#define NCLOCKS 5
++static const unsigned int clock_select[][2] = {
++	{PWM_CLK_32K, PWM_TCLK_NS_32K},
++	{PWM_CLK_24M, PWM_TCLK_NS_24M},
++	{PWM_CLK_1_5M, PWM_TCLK_NS_1_5M},
++	{PWM_CLK_93_75K, PWM_TCLK_NS_93_75K},
++	{PWM_CLK_367_6, PWM_TCLK_NS_367_6}
++};
++
+ /* PWM-to-GPIO mapping (0 == first Cypress GPIO).  */
+ #define PWM_UNUSED			-1
+ static const int pwm2gpio_mapping[] = {
+@@ -501,6 +520,10 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ {
+ 	int ret = 0;
+ 	int period = 0, duty = 0;
++	int i;
++	int pwm_tclk_ns;
++	int selected_clock = -1;
++
+ 	struct cy8c9540a *dev =
+ 	    container_of(chip, struct cy8c9540a, pwm_chip);
+ 	struct i2c_client *client = dev->client;
+@@ -509,17 +532,35 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 		return -EINVAL;
+ 	}
+  
+-	period = period_ns / PWM_TCLK_NS;
+-	duty = duty_ns / PWM_TCLK_NS;
+- 
+ 	/*
+-	 * Check period's upper bound.  Note the duty cycle is already sanity
+-	 * checked by the PWM framework.
+-	 */
+-	if (period > PWM_MAX_PERIOD) {
+-		dev_err(&client->dev, "period must be within [0-%d]ns\n",
+-			PWM_MAX_PERIOD * PWM_TCLK_NS);
++	 * We need to iterate over the available clocks
++	 * to find a suitable source clock and divider
++	 * combination
++     */
++	for (i = 0; i < NCLOCKS; i++) {
++		/*
++         * Select a clock candidate
++		 */
++		pwm_tclk_ns = clock_select[i][1];
++		period = period_ns / pwm_tclk_ns;
++
++		/*
++		 * Check if the period can be achieved
++		 * by this clock.
++		 * checked by the PWM framework.
++		 */
++		if (period <= PWM_MAX_PERIOD && period > 0) {
++			selected_clock = i;
++			break;
++		}
++	}
++ 
++	if (selected_clock < 0) {
++		dev_err(&client->dev, "invalid period\n");
+ 		return -EINVAL;
++	} else {
++		period = period_ns / pwm_tclk_ns;
++		duty = duty_ns / pwm_tclk_ns;
+ 	}
+  
+ 	mutex_lock(&dev->lock);
+@@ -530,6 +571,12 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 		goto end;
+ 	}
+  
++	ret = i2c_smbus_write_byte_data(client, REG_PWM_CLK, (u8)clock_select[selected_clock][0]);
++	if (ret < 0) {
++		dev_err(&client->dev, "can't write to REG_PWM_CLK\n");
++		goto end;
++	}
++
+ 	ret = i2c_smbus_write_byte_data(client, REG_PWM_PERIOD, (u8)period);
+ 	if (ret < 0) {
+ 		dev_err(&client->dev, "can't write to REG_PWM_PERIOD\n");
