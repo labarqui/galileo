@@ -90,11 +90,9 @@ static const u8 cy8c9540a_port_offs[] = {
 #define GPIO_BASE_ID			16
 #define GPIO_IRQBASE			64
 #define PWM_BASE_ID			0
-// TODO: Support dynamic PWM values
-#define PWM_CLK				0x00	/* see resulting PWM_TCLK_NS */
-#define PWM_TCLK_NS			31250	/* 32kHz */
 #define SOC_GPIO_INT_PIN		13
 
+/* PWM clock definition */
 #define PWM_CLK_32K			0x00
 #define PWM_TCLK_NS_32K		31250
 #define PWM_CLK_24M			0x01
