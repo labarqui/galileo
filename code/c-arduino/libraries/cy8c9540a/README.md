@@ -40,5 +40,5 @@ To compress in a single tar archive:
 
 ```
 cd tmp/deploy/images/
-tar -hcvf ~/image.tar bzImage boot/ core-image-minimal-initramfs-clanton.cpio.gz grub.efi image-full-galileo-clanton.ext3
+tar -hzcvf ~/image.tar bzImage boot/ core-image-minimal-initramfs-clanton.cpio.gz grub.efi image-full-galileo-clanton.ext3
 ```
