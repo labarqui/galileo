@@ -91,7 +91,7 @@ static const u8 cy8c9540a_port_offs[] = {
 #define GPIO_IRQBASE			64
 #define PWM_BASE_ID			0
 #define SOC_GPIO_INT_PIN		13
-
+ 
 /* PWM clock definition */
 #define PWM_CLK_32K			0x00
 #define PWM_TCLK_NS_32K		31250
@@ -531,7 +531,7 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
 	if (pwm->pwm > NPWM) {
 		return -EINVAL;
 	}
-
+ 
 	/*
 	 * We need to iterate over the available clocks
 	 * to find a suitable source clock and divider
@@ -564,6 +564,7 @@ static int cy8c9540a_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
 	}
  
 	mutex_lock(&dev->lock);
+ 
 	ret = i2c_smbus_write_byte_data(client, REG_PWM_SELECT, (u8)pwm->pwm);
 	if (ret < 0) {
 		dev_err(&client->dev, "can't write to REG_PWM_SELECT\n");
