@@ -4,32 +4,30 @@ To build the kernel follow [AlexT's instrucions](https://github.com/alext-mkrs/m
 
 2. Extract:
 
-```
-tar xzvf meta-clanton_v1.0.1.tar.gz
-cd meta-clanton_v1.0.1
-git clone https://github.com/alext-mkrs/meta-alext-galileo
-./setup.sh -e "meta-alext-galileo"
-```
-
+    ```
+    tar xzvf meta-clanton_v1.0.1.tar.gz
+    cd meta-clanton_v1.0.1
+    git clone https://github.com/alext-mkrs/meta-alext-galileo
+    ./setup.sh -e "meta-alext-galileo"
+    ```
+    
 3. Remove OpenCV bindings:
 
-```
-# Comment OpenCV entries and python bindings
-vim ./meta-clanton-distro/recipes-core/images/image-full.bb
-# Remove files:
-rm ./meta-clanton-distro/recipes-support/opencv/opencv_2.4.3.bbappend
-rm ./meta-oe/meta-oe/recipes-support/opencv/opencv-samples_2.4.3.bb
-```
+    ```
+    # Comment OpenCV entries and python bindings
+    vim ./meta-clanton-distro/recipes-core/images/image-full.bb
+    # Remove files:
+    rm ./meta-clanton-distro/recipes-support/opencv/opencv_2.4.3.bbappend
+    rm ./meta-oe/meta-oe/recipes-support/opencv/opencv-samples_2.4.3.bb
+    ```
 
 4. Setup environment:
 
-```
-source poky/oe-init-build-env yocto_build/
-bitbake linux-yocto-clanton
-bitbake image-full-galileo
-```
-
-
+    ```
+    source poky/oe-init-build-env yocto_build/
+    bitbake linux-yocto-clanton
+    bitbake image-full-galileo
+    ```
 
 Once the kernel is built, rebuild modules with:
 
