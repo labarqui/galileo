@@ -102,8 +102,7 @@ void setup(void) {
 		printf("Null export!\r\n"); return;
 	}
 	rewind(fd_export);
-	snprintf(buffer, sizeof(buffer), "%u", 3);
-	fwrite(buffer, sizeof(char), sizeof(buffer), fd_export);
+	fprintf(fd_export, "%u", 3);
 	fflush(fd_export);
 	fclose(fd_export);
 
@@ -112,8 +111,7 @@ void setup(void) {
 		printf("Null enable!\r\n"); return;
 	}
 	rewind(fd_enable);
-	snprintf(buffer, sizeof(buffer), "%u", 3);
-	fwrite(buffer, sizeof(char), sizeof(buffer), fd_enable);
+	fprintf(fd_enable, "%u", 1);
 	fflush(fd_enable);
 	fclose(fd_enable);
 
@@ -122,8 +120,7 @@ void setup(void) {
 		printf("Null period!\r\n"); return;
 	}
 	rewind(fd_period);
-	snprintf(buffer, sizeof(buffer), "%u", 2000000);
-	fwrite(buffer, sizeof(char), sizeof(buffer), fd_period);
+	fprintf(fd_period, "%u", 7000000);
 	fflush(fd_period);
 	fclose(fd_period);
 
@@ -132,10 +129,8 @@ void setup(void) {
 		printf("Null duty_cycle!\r\n"); return;
 	}
 	rewind(fd_duty_cycle);
-	snprintf(buffer, sizeof(buffer), "%u", 500000);
-	fwrite(buffer, sizeof(char), sizeof(buffer), fd_duty_cycle);
+	fprintf(fd_duty_cycle, "%u", 1000000);
 	fflush(fd_duty_cycle);
-	fclose(fd_duty_cycle);
 
 	printf("Waiting\r\n");
 	fflush(stdout);
@@ -145,5 +140,9 @@ void setup(void) {
 }
 
 void loop(void) {
-
+	for (int i = 0; i < 10; i++) {
+		fprintf(fd_duty_cycle, "%u", 1000000 + i * 100000);
+		fflush(fd_duty_cycle);
+		sleep(1);
+	}
 }
