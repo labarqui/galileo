@@ -40,30 +40,6 @@ CXXFLAGS = $(COM_FLAGS) -fno-exceptions
 
 LDFLAGS = -m32 -march=i586 --sysroot=$(SYS_ROOT) -Os -Wl,--gc-sections 
 
-# modules
-# does not have all the files change as per project
-C_MODULES = $(ARDUINO_PATH)/wiring_analog.c
-C_MODULES += $(ARDUINO_PATH)/fast_gpio_common.c  
-C_MODULES += $(ARDUINO_PATH)/fast_gpio_sc.c  
-C_MODULES += $(ARDUINO_PATH)/fast_gpio_nc.c  
-C_MODULES += $(ARDUINO_PATH)/wiring_digital.c
-C_MODULES += $(ARDUINO_PATH)/interrupt.c  
-C_MODULES += $(ARDUINO_PATH)/sysfs.c  
-C_MODULES += $(ARDUINO_PATH)/i2c.c     
-C_MODULES += $(ARDUINO_PATH)/mux.c        
-C_MODULES += $(ARDUINO_PATH)/trace.c  
-
-CXX_MODULES = $(ABS_PATH)/hardware/arduino/x86/variants/galileo_fab_d/variant.cpp
-CXX_MODULES += $(ARDUINO_PATH)/RingBuffer.cpp
-CXX_MODULES += $(ARDUINO_PATH)/TTYUART.cpp
-CXX_MODULES += $(ARDUINO_PATH)/UtilTime.cpp
-CXX_MODULES += $(ARDUINO_PATH)/Print.cpp
-CXX_MODULES += $(ARDUINO_PATH)/Stream.cpp   
-CXX_MODULES += $(ARDUINO_PATH)/WString.cpp
-CXX_MODULES += $(ARDUINO_PATH)/WMath.cpp
-
-
-INCS =	-I$(ABS_PATH)/hardware/arduino/x86/variants/galileo_fab_d 
 INCS += -I$(ARDUINO_PATH)
 
 COBJS = $(C_MODULES:.c=.o)
