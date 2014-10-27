@@ -6,7 +6,7 @@
 #
 
 BINARY = ip
-MAIN = $(BINARY).cpp
+MAIN = $(BINARY).c
 ARDUINO_VER = 153
 PORT = /dev/ttyACM0
 
@@ -67,7 +67,6 @@ strip: $(BINARY).elf
 
 size: $(BINARY).elf
 	$(BIN_PATH)/$(SIZE) $(BINARY).elf
-#@echo "of 262,144 bytes maximum"
 clean:
 	rm -f $(BINARY).o
 	rm -f $(OBJS)
